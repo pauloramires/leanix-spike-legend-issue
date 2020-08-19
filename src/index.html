@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="application-name" content="spike-legend">
+  <meta name="description" content="%description%">
+  <meta name="author" content="Paulo dos Santos">
+
+  <title>Spike: legend</title>
+  <style>
+    [x-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body
+  x-data="initializeContext()"
+  x-init="() => {
+    initializeReport()
+    $watch('viewKey', () => fetchGraphQLLegendItems())
+  }">
+  <div x-cloak class="container mx-auto h-screen flex p-8 gap-4">
+    <div class="flex-1 flex flex-col items-center border">
+      <div class="py-4 text-xl uppercase font-bold">View Callback Legend Items</div>
+      <div class="border-t border-l mt-8">
+        <div class="grid grid-cols-3">
+          <div class="px-2 py-1 text-center border-r border-b">Label</div>
+          <div class="px-2 py-1 text-center border-r border-b">Background</div>
+          <div class="px-2 py-1 text-center border-r border-b">Color</div>
+        </div>
+        <template x-for="item in viewCallbackLegendItems" :key="item.id">
+          <div class="grid grid-cols-3">
+            <div
+              x-text="item.label || item.value"
+              class="px-2 py-1 text-center border-r border-b"
+              :style="getComputedItemStyle(item)"></div>
+            <div class="px-2 py-1 text-center border-r border-b" x-text="item.bgColor"></div>
+            <div class="px-2 py-1 text-center border-r border-b" x-text="item.color"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div class="flex-1 flex flex-col items-center border">
+      <div class="py-4 text-xl uppercase font-bold">GraphQL Legend Items</div>
+      <div class="border-t border-l mt-8">
+        <div class="grid grid-cols-3">
+          <div class="px-2 py-1 text-center border-r border-b">Label</div>
+          <div class="px-2 py-1 text-center border-r border-b">Background</div>
+          <div class="px-2 py-1 text-center border-r border-b">Color</div>
+        </div>
+        <template x-for="item in graphQLLegendItems" :key="item.id">
+          <div class="grid grid-cols-3">
+            <div
+              x-text="item.label || item.value"
+              class="px-2 py-1 text-center border-r border-b"
+              :style="getComputedItemStyle(item)"></div>
+            <div class="px-2 py-1 text-center border-r border-b" x-text="item.bgColor"></div>
+            <div class="px-2 py-1 text-center border-r border-b" x-text="item.color"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
